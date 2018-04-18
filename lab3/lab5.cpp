@@ -15,10 +15,10 @@ void printMacierz(double *mac, int size){
 }
 
 void printMacierz(double **mac, int size){
-	cout << setprecision(6);
+	cout << setprecision(4) << fixed;
 	for(int i = 0; i < size; i++){
 		for(int j = 0; j < size; j++){
-			cout << setw(8) << mac[i][j] << "\t";
+			cout << setw(11) << mac[i][j];
 		}
 		cout << endl;
 	}
@@ -39,15 +39,17 @@ void printMacierz2(double **mac, int size){
 }
 
 void printVector(double *vect, int size){
+	cout << setprecision(4) << fixed;
 	for(int i = 0; i < size; i++){
-		cout<< vect[i] << "\t";
+		cout<< setw(11) << vect[i];
 	}
 }
+
 
 void printVectorPrecission(double *vect, int size, int precision){
 	cout << setprecision(precision);
 	for(int i = 0; i < size; i++){
-		cout<< vect[i] << "\t";
+		cout<< setw(precision + 5) << vect[i];
 	}
 }
 
@@ -87,8 +89,7 @@ void insertDefaultVal(double **mac, double *vect){
 	vect[3] = 177;
 }
 
-void insertValNa5(double **mac, double *vect, int size){
-	double vare = 1e-7;
+void insertValNa5(double **mac, double *vect, int size, double vare){
 	for(int i = 0; i < size; i++){
 		for(int j = 0; j < size; j++){
 			mac[i][j] = 1;
@@ -104,6 +105,24 @@ void copyMacierz(double **from, double **to, int size){
 			to[i][j] = from[i][j];
 		}
 	}
+}
+
+void zerowanie(double **mac, int size){
+	for(int i = 0; i < size; i++){
+		for(int j = 0; j < size; j++)
+			mac[i][j] = 0;
+	}
+}
+
+void checking(double **A, double *x, double *b, double *w, int size){
+	for(int i = 0; i < size; i++){
+		w[i] = 0;
+		for(int j = 0; j < size; j++){
+			w[i] += A[i][j] * x[j];
+		}
+		w[i] = w[i] - b[i];
+	}
+	
 }
 
 //---------------------------------------------------------------------
@@ -172,13 +191,6 @@ void macierzOdwrotna(double **mac, int size, double **odwrotna, double detMac){
 	}
 	deleting(tempMac, size-1);
 	
-}
-
-void zerowanie(double **mac, int size){
-	for(int i = 0; i < size; i++){
-		for(int j = 0; j < size; j++)
-			mac[i][j] = 0;
-	}
 }
 
 void calculatingLU(double **A, int size, double **L, double **U){
@@ -275,11 +287,32 @@ int main(){
 	cout << endl << endl << "Wektor wyniku:" <<endl;
 	printVector(wynik, n);
 	
+//----------------------------------------------------
+	cout << endl << endl << "Zadanie na 5" << endl;
+	
+	double vare = 10e-5;
+	double *x = new double [n];
+	
+	for(int i = 5; i < 21; i++){
+		cout << endl << "10^-" << i << endl;
+		
+		insertValNa5(A, b, n, vare);
+		
+		calculatingLU(A, n, L, U);
+		calcX(L, U, b, x, n);
+		checking(A, x, b, wynik, n);
+		
+		printVectorPrecission(wynik, n, 20);
+		vare /= 10;
+	}
+	
+	
 	deleting(A, n);
 	deleting(U, n);
 	deleting(L, n);
 	delete(b);
 	delete(wynik);
+	delete(x);
 
 	return 0;
 }
