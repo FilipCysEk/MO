@@ -111,7 +111,7 @@ void metodaJacobiego(double **A, double **L, double **D, double **U, double *x, 
 		//mnozenieMacierzy(x, -1, x, size);
 		dodawanieMacierzy(x, C, x, size);
 		
-		//Sprawdzanie, czy wielkoœæ kroku jet odpowiednia
+		//Sprawdzanie, czy wielkoÅ›Ä‡ kroku jet odpowiednia
 		estymator = maxKrokSize(x, xm1, size);
 		residium = maxDeviation(A, x, b, size);
 		
@@ -177,7 +177,7 @@ void metodaGaussaSeidela(double **A, double **L, double **U, double **D, double 
 		mnozenieMacierzy(M, xm1, x, size);
 		dodawanieMacierzy(x, C, x, size);
 		
-		//Sprawdzanie, czy wielkoœæ kroku jet odpowiednia
+		//Sprawdzanie, czy wielkoÅ›Ä‡ kroku jet odpowiednia
 		estymator = maxKrokSize(x, xm1, size);
 		residium = maxDeviation(A, x, b, size);
 		
@@ -253,7 +253,7 @@ void metodaSOR(double **A, double **L, double **U, double **D, double *x0, doubl
 		mnozenieMacierzy(M, xm1, x, size);
 		dodawanieMacierzy(x, C, x, size);
 		
-		//Sprawdzanie, czy wielkoœæ kroku jet odpowiednia
+		//Sprawdzanie, czy wielkoÅ›Ä‡ kroku jet odpowiednia
 		estymator = maxKrokSize(x, xm1, size);
 		residium = maxDeviation(A, x, b, size);
 		
