@@ -119,7 +119,7 @@ double det(double **mac, int size){
 		}
 		return det;
 	}
-	cout << "ERROR nie potrafiê obliczyæ wyznacznika" << endl;
+	cout << "ERROR nie potrafiÄ™ obliczyÄ‡ wyznacznika" << endl;
 	exit(4);
 }
 
